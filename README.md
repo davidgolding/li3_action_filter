@@ -7,7 +7,7 @@ Lithium's filtering mechanism does not directly support applying filters to cont
 
 ###Installation
 
-Installing and using `li3_action_filter` is simple. Simply install the `li3_action_filter` contents in your application's `app\libraries` directory, then add the plugin in the `libraries.php` bootstrap file. Then, wherever you need to apply a filter on a controller action, invoke the `li3_action_filter\Filters` class.
+Installing and using `li3_action_filter` is simple. Place the `li3_action_filter` contents in your application's `app\libraries` directory then add the plugin in the `libraries.php` bootstrap file. Wherever you need to apply a filter on a controller action, you can then invoke the `li3_action_filter\Filters` class directly.
 
 _In the `app/config/bootstrap/libraries.php` file:_
 
@@ -24,11 +24,9 @@ Libraries::add('li3_action_filter', ['bootstrap' => false]);
 ?>
 ```
 
-_Anywhere else in the app:_
+_Anywhere else in the app, for example:_
 
 ```php
-<?php
-
 use li3_action_filter\Filters;
 use lithium\analysis\Logger;
 
@@ -36,7 +34,6 @@ Filters::apply('lithium\action\Controller', 'view', function($self, $params, $ch
     Logger::write('debug', print_r($params, true));
     return $chain->next($self, $params, $chain);
 });
-
 ```
 
 ###Usage
@@ -62,7 +59,7 @@ class PagesController extends \lithium\action\Controller {
 
 ```
 
-With the `PagesController::view` action filterable, we can now apply a filter anywhere else in the app, like so:
+With the `PagesController::view` action filterable, we can now apply a filter to this action anywhere else in the app, like so:
 
 ```php
 <?php
@@ -78,4 +75,5 @@ Filters::apply('app\controllers\PagesController', 'view', function($self, $param
     return $chain->next($self, $params, $chain);
 });
 
+?>
 ```
